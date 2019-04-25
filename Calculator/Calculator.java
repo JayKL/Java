@@ -105,55 +105,10 @@ class Calculator implements ActionListener{
 			hasequalbeenhit=true;
 		}
 
-		if (btn==zerobtn){
+		if (btn==zerobtn | btn==onebtn | btn==twobtn | btn==threebtn | btn==fourbtn | btn==fivebtn | btn==sixbtn | btn==sevenbtn | btn==eightbtn | btn==ninebtn ){
 			equalchecker(hasequalbeenhit,screen);
 			screentextsave=screen.getText();
-			screen.setText(screentextsave + "0");
-		}
-		if (btn==onebtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "1");
-			}
-		if (btn==twobtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "2");
-			}
-		if (btn==threebtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "3");
-			}
-		if (btn==fourbtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "4");
-			}
-		if (btn==fivebtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "5");
-			}
-		if (btn==sixbtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "6");
-			}
-		if (btn==sevenbtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "7");
-			}
-		if (btn==eightbtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "8");
-			}
-		if (btn==ninebtn){
-			equalchecker(hasequalbeenhit,screen);
-			screentextsave=screen.getText();
-			screen.setText(screentextsave + "9");
+			screen.setText(screen.getText() + btn.getLabel());
 			}
 
 
@@ -196,6 +151,3 @@ class Calculator implements ActionListener{
 		}		
 	}
 }
-
-
-
