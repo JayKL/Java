@@ -57,7 +57,7 @@ class StringOrganiser2{
 				}
 			}
 		
-	System.out.println("String with letters reversed=" + reversedwords);
+	System.out.println("String with letters reversed=" + reversedwords.substring(0,reversedwords.length() - 1 ) + "|");
 	}
 	
 	
