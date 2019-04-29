@@ -144,6 +144,7 @@ class OpenAccountWindow implements ActionListener {
 				String name = "";
 				String addressstring = "";
 				String SQLinsert = "";
+				String accountnumber="";
 
 				if (savingscb.isSelected()) {
 					accounttypecheck = "S";
@@ -172,11 +173,11 @@ class OpenAccountWindow implements ActionListener {
 					Statement strefvar1 = con.createStatement(); //max(substring(Accno,3,5))
 					Statement strefvar2 = con.createStatement();
 					ResultSet resultsfromtablebank = strefvar1.executeQuery("select max(substring(Accno,3,5)) from (select * from bank where Accno like '"+ accounttypecheck+"%') as T1" );
-					// SQLinsert ="INSERT INTO bank (Accno,Name,Address) VALUES ('"+accounttypecheck+gendercheck+"' , '"+name+"' , '"+addressstring+"' )";
-				//	 strefvar2.executeUpdate(SQLinsert);
-					while (resultsfromtablebank.next()) {
-						System.out.println(resultsfromtablebank.getString(1) );
-					}
+					resultsfromtablebank.next();
+					accountnumber=correctformatstring(Integer.parseInt(resultsfromtablebank.getString(1))+1);
+					SQLinsert ="INSERT INTO bank (Accno,Name,Address) VALUES ('"+accounttypecheck+gendercheck+accountnumber+"' , '"+name+"' , '"+addressstring+"' )";
+					strefvar2.executeUpdate(SQLinsert);
+
 				} catch (Exception gener1) {
 					System.out.println("general error 1 ->" + gener1.toString());
 				}
@@ -192,16 +193,16 @@ class OpenAccountWindow implements ActionListener {
 	}
 	
 	
-	public String addonetostring(String X) {
-		int A=Integer.parseInt(X);
+	public String correctformatstring(int A) {
 		String Result;
 		if (A<10) {
-			Result
-			
+			Result="0"+"0"+Integer.toString(A);
+		} else if (A<100) {
+			Result="0"+Integer.toString(A);
+		} else {
+			Result=Integer.toString(A);
 		}
-		
-		
-		
+		return Result;
 	}
 
 }
