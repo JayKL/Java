@@ -13,10 +13,8 @@ class BankingApp implements WindowListener {
 	JMenuItem withdrawmenuitem = new JMenuItem("Withdraw Money");
 	JMenuItem checkbalancemenuitem = new JMenuItem("Check Balance");
 	OpenAccountWindow openaccountvariable;
-	OpenDepositWindow depositaccountvariable;
-	OpenWithdrawWindow withdrawacountvariable;
-	OpenCheckBalance checkbalancevariable;
-	int CheckValue=0;
+	WithDrawCheck withdrawcheckrefvar;
+	public int CheckValue=0;
 
 	public static void main(String xyz[]) {
 		BankingApp bankingappvariable = new BankingApp();
@@ -25,9 +23,7 @@ class BankingApp implements WindowListener {
 	BankingApp() {
 
 		openaccountvariable = new OpenAccountWindow();
-		depositaccountvariable = new OpenDepositWindow();
-		withdrawacountvariable = new OpenWithdrawWindow();
-		checkbalancevariable = new OpenCheckBalance();
+		withdrawcheckrefvar = new WithDrawCheck();
 
 		bankingmenu.add(openaccountmenuitem);
 		bankingmenu.add(depositmenuitem);
@@ -50,9 +46,19 @@ class BankingApp implements WindowListener {
 
 
 		depositmenuitem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent openaccounthit) {
+			public void actionPerformed(ActionEvent deposithit) {
 				try {
-					depositaccountvariable.depositaccwin.setVisible(true);
+					withdrawcheckrefvar.withdrawcheckwin.setVisible(false);
+					withdrawcheckrefvar.currentbalanceinfo.setVisible(false);
+					withdrawcheckrefvar.currentbalanceinfo.setText("");
+					withdrawcheckrefvar.amounttf.setText("");
+					withdrawcheckrefvar.amountlabel.setText("Deposit Amount: ");
+					withdrawcheckrefvar.amounttf.setVisible(true);
+					withdrawcheckrefvar.savebutton.setText("Deposit");
+					withdrawcheckrefvar.withdrawordep=true;
+					withdrawcheckrefvar.areyouwith=false;
+					withdrawcheckrefvar.tablenamewithordep="deposit";
+					withdrawcheckrefvar.withdrawcheckwin.setVisible(true);
 				} catch (Exception E) {
 					System.out.println(E);
 				}
@@ -61,9 +67,19 @@ class BankingApp implements WindowListener {
 		
 		
 		withdrawmenuitem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent openaccounthit) {
+			public void actionPerformed(ActionEvent withdrawhit) {
 				try {
-					withdrawacountvariable.withdrawaccwin.setVisible(true);
+					withdrawcheckrefvar.withdrawcheckwin.setVisible(false);
+					withdrawcheckrefvar.currentbalanceinfo.setVisible(false);
+					withdrawcheckrefvar.currentbalanceinfo.setText("");
+					withdrawcheckrefvar.amounttf.setText("");
+					withdrawcheckrefvar.amountlabel.setText("Withdraw Amount: ");
+					withdrawcheckrefvar.amounttf.setVisible(true);
+					withdrawcheckrefvar.savebutton.setText("Withdraw");
+					withdrawcheckrefvar.withdrawordep=true;
+					withdrawcheckrefvar.areyouwith=true;
+					withdrawcheckrefvar.tablenamewithordep="withdraw";
+					withdrawcheckrefvar.withdrawcheckwin.setVisible(true);
 				} catch (Exception E) {
 					System.out.println(E);
 				}
@@ -71,9 +87,16 @@ class BankingApp implements WindowListener {
 		});
 				
 		checkbalancemenuitem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent openaccounthit) {
+			public void actionPerformed(ActionEvent checkbalancehit) {
 				try {
-					checkbalancevariable.checkbalancewin.setVisible(true);
+					withdrawcheckrefvar.withdrawordep=false;
+					withdrawcheckrefvar.areyouwith=false;
+					withdrawcheckrefvar.currentbalanceinfo.setVisible(true);
+					withdrawcheckrefvar.withdrawcheckwin.setVisible(false);
+					withdrawcheckrefvar.amountlabel.setText("Current Amount:  ");
+					withdrawcheckrefvar.amounttf.setVisible(false);
+					withdrawcheckrefvar.savebutton.setText("Check Balance");
+					withdrawcheckrefvar.withdrawcheckwin.setVisible(true);
 				} catch (Exception E) {
 					System.out.println(E);
 				}
@@ -232,230 +255,67 @@ class OpenAccountWindow implements ActionListener {
 	}
 }
 
-class OpenDepositWindow{
-	public JTextField depositaccnotb = new JTextField(20);
-	public JTextField depositnametb = new JTextField(20);
-	public JTextField depositaddresstb = new JTextField(20);
-	public JTextField depositamounttb = new JTextField(20);
-	JFrame depositaccwin = new JFrame("Deposit");
 
 
-	JPanel depositaccountaccnonamenaddress = new JPanel();
-	JPanel depositaccountinsertpanel = new JPanel();
-	JButton depositaccountsavebtn = new JButton("Deposit");
+
+class WithDrawCheck{
+	boolean areyouwith;
+	boolean withdrawordep;
+	String tablenamewithordep;
+	int cont;
+	
+	public JTextField accountnumbertf = new JTextField(20);
+	public JTextField amounttf = new JTextField(20);
+	JFrame withdrawcheckwin = new JFrame("Bank App");
+
+
+	JPanel findaccountnumberpan = new JPanel();
+	JPanel nameandaddresspan = new JPanel();
+	JPanel insertdepowithpan = new JPanel();
+	JButton findaccount = new JButton("Find");
+	JButton savebutton = new JButton("");
 	
 	
-	JLabel depositaccnuml = new JLabel("Accno");
-	JLabel depositnamel = new JLabel("Name");
-	JLabel depositaddressl = new JLabel("Address");
-	JLabel depositl = new JLabel("Deposit Amount");
-
-
-
-	public OpenDepositWindow(){
-		
-		depositaccwin.setLayout(new GridLayout(3, 1));
-		depositaccountaccnonamenaddress.setLayout(new GridLayout(3, 3));
-		depositaccountinsertpanel.setLayout(new GridLayout(1, 2));
-		depositaccwin.setSize(400, 400);
-		depositaccwin.setLocation(500, 500);
-		
-		depositaccwin.add(depositaccountaccnonamenaddress);
-		depositaccwin.add(depositaccountinsertpanel);
-		depositaccwin.add(depositaccountsavebtn);
-		
-		depositaccountaccnonamenaddress.add(depositaccnuml);
-		depositaccountaccnonamenaddress.add(depositaccnotb);
-		depositaccountaccnonamenaddress.add(depositnamel);
-		depositaccountaccnonamenaddress.add(depositnametb);
-		depositaccountaccnonamenaddress.add(depositaddressl);
-		depositaccountaccnonamenaddress.add(depositaddresstb);
-		
-		depositaccountinsertpanel.add(depositl);
-		depositaccountinsertpanel.add(depositamounttb);
-		
-		depositaccountsavebtn.addActionListener(new ActionListener(){			
-			public void actionPerformed(ActionEvent savebutton) {
-							
-			String depositaccounttext="";
-			String depositnametext="";
-			String depositaddresstext="";
-			String depositamounttext="";
-			String SQLinsert="";
-							
-				depositaccounttext=depositaccnotb.getText();
-				depositnametext = depositnametb.getText();
-				depositaddresstext = depositaddresstb.getText();
-				depositamounttext = depositamounttb.getText();
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection(
-							"jdbc:mysql://localhost/qabank",
-							"root", "");
-					Statement strefvar1 = con.createStatement(); //max(substring(Accno,3,5))
-					Statement strefvar2 = con.createStatement();
-					ResultSet resultsfromtabledeposit = strefvar1.executeQuery("select * from bank where Accno='"+depositaccounttext+"' and Name='"+depositnametext+"' and Address='"+depositaddresstext+"'" );
-					resultsfromtabledeposit.next();
-					SQLinsert ="INSERT INTO deposit (Accno,Amount,Datetime) VALUES ('"+resultsfromtabledeposit.getString(1)+"',"+depositamounttext+",now())";
-					strefvar2.executeUpdate(SQLinsert);
-					depositamounttb.setText("");
-				} catch (Exception gener1) {
-					System.out.println("No Account Found, please check accno, name and address. If forgotten please contact your local branch");
-				}
-				
-			}
-		}
-		);
-		
-	}
-}
-
-
-
-class OpenWithdrawWindow{
-	public JTextField withdrawaccnotb = new JTextField(20);
-	public JTextField withdrawnametb = new JTextField(20);
-	public JTextField withdrawaddresstb = new JTextField(20);
-	public JTextField withdrawamounttb = new JTextField(20);
-	JFrame withdrawaccwin = new JFrame("Withdraw");
-
-
-	JPanel withdrawaccountaccnonamenaddress = new JPanel();
-	JPanel withdrawaccountinsertpanel = new JPanel();
-	JButton withdrawaccountsavebtn = new JButton("Withdraw");
-	
-	
-	JLabel withdrawaccnuml = new JLabel("Accno");
-	JLabel withdrawnamel = new JLabel("Name");
-	JLabel withdrawaddressl = new JLabel("Address");
-	JLabel withdrawl = new JLabel("Withdraw Amount");
-
-
-
-	public OpenWithdrawWindow(){
-		
-		withdrawaccwin.setLayout(new GridLayout(3, 1));
-		withdrawaccountaccnonamenaddress.setLayout(new GridLayout(3, 3));
-		withdrawaccountinsertpanel.setLayout(new GridLayout(1, 2));
-		withdrawaccwin.setSize(400, 400);
-		withdrawaccwin.setLocation(500, 500);
-		
-		withdrawaccwin.add(withdrawaccountaccnonamenaddress);
-		withdrawaccwin.add(withdrawaccountinsertpanel);
-		withdrawaccwin.add(withdrawaccountsavebtn);
-		
-		withdrawaccountaccnonamenaddress.add(withdrawaccnuml);
-		withdrawaccountaccnonamenaddress.add(withdrawaccnotb);
-		withdrawaccountaccnonamenaddress.add(withdrawnamel);
-		withdrawaccountaccnonamenaddress.add(withdrawnametb);
-		withdrawaccountaccnonamenaddress.add(withdrawaddressl);
-		withdrawaccountaccnonamenaddress.add(withdrawaddresstb);
-		
-		withdrawaccountinsertpanel.add(withdrawl);
-		withdrawaccountinsertpanel.add(withdrawamounttb);
-		
-		withdrawaccountsavebtn.addActionListener(new ActionListener(){			
-			public void actionPerformed(ActionEvent savebutton) {
-							
-			String withdrawaccounttext="";
-			String withdrawnametext="";
-			String withdrawaddresstext="";
-			String withdrawamounttext="";
-			String SQLinsert="";
-							
-				withdrawaccounttext=withdrawaccnotb.getText();
-				withdrawnametext = withdrawnametb.getText();
-				withdrawaddresstext = withdrawaddresstb.getText();
-				withdrawamounttext = withdrawamounttb.getText();
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection(
-							"jdbc:mysql://localhost/qabank",
-							"root", "");
-					Statement strefvar1 = con.createStatement(); //max(substring(Accno,3,5))
-					Statement strefvar2 = con.createStatement();
-					Statement strefvar3 = con.createStatement();
-					Statement strefvar4 = con.createStatement();
-					ResultSet resultsfromtablebank = strefvar1.executeQuery("select * from bank where Accno='"+withdrawaccounttext+"' and Name='"+withdrawnametext+"' and Address='"+withdrawaddresstext+"'" );
-					resultsfromtablebank.next();
-					ResultSet resultsfromtablewithdraw = strefvar2.executeQuery("select sum(Amount) from withdraw where Accno='"+withdrawaccounttext+"'");
-					ResultSet resultsfromtabledeposit = strefvar3.executeQuery("select sum(Amount) from deposit where Accno='"+withdrawaccounttext+"'");
-					resultsfromtablewithdraw.next();
-					resultsfromtabledeposit.next();
-					if ((resultsfromtabledeposit.getFloat(1) - resultsfromtablewithdraw.getFloat(1))<=0){
-						System.out.println("not enough money in accuont to withdraw");
-						throw new NotEnoughMoney("not enough money");
-					} else{
-						SQLinsert ="INSERT INTO withdraw (Accno,Amount,Datetime) VALUES ('"+resultsfromtablebank.getString(1)+"',"+withdrawamounttext+",now())";
-						strefvar4.executeUpdate(SQLinsert);
-					}
-					withdrawamounttb.setText("");
-				} catch (Exception gener1) {
-					System.out.println("No Account Found, please check accno, name and address. If forgotten please contact your local branch");
-				}
-				
-			}
-		}
-		);
-		
-	}
-}
-
-
-
-class OpenCheckBalance{
-	public JTextField checkbalanceaccnotb = new JTextField(20);
-	public JTextField checkbalancenametb = new JTextField(20);
-	public JTextField checkbalanceaddresstb = new JTextField(20);
-	JFrame checkbalancewin = new JFrame("Check Balance");
-
-
-	JPanel checkbalanceaccountaccnonamenaddress = new JPanel();
-	JPanel checkbalancepanel = new JPanel();
-	JButton checkbalancesavebtn = new JButton("Check Balance");
-	
-	
-	JLabel checkbalanceaccnuml = new JLabel("Accno");
-	JLabel checkbalancenamel = new JLabel("Name");
-	JLabel checkbalanceaddressl = new JLabel("Address");
+	JLabel wdcaccnuml = new JLabel("Account: ");
+	JLabel wdcnamel = new JLabel("Name: ");
+	JLabel wdcaddressl = new JLabel("Address: ");
 	JLabel currentbalanceinfo = new JLabel("");
+	JLabel foundnamel = new JLabel("");
+	JLabel foundaddressl = new JLabel("");
+	JLabel amountlabel = new JLabel("");
 
 
 
-	public OpenCheckBalance(){
+	public WithDrawCheck(){
 		
-		checkbalancewin.setLayout(new GridLayout(3, 1));
-		checkbalanceaccountaccnonamenaddress.setLayout(new GridLayout(3, 3));
-		checkbalancepanel.setLayout(new GridLayout(1,2));
-		checkbalancewin.setSize(400, 400);
-		checkbalancewin.setLocation(500, 500);
+		withdrawcheckwin.setLayout(new GridLayout(5, 1));
+		findaccountnumberpan.setLayout(new GridLayout(1,3));
+		nameandaddresspan.setLayout(new GridLayout(2, 2));
+		insertdepowithpan.setLayout(new GridLayout(1,2));
+		withdrawcheckwin.setSize(400, 400);
+		withdrawcheckwin.setLocation(500, 500);
 		
-		checkbalancewin.add(checkbalanceaccountaccnonamenaddress);
-		checkbalancewin.add(checkbalancepanel);
-		checkbalancewin.add(checkbalancesavebtn);
+		withdrawcheckwin.add(findaccountnumberpan);
+		withdrawcheckwin.add(nameandaddresspan);
+		withdrawcheckwin.add(insertdepowithpan);
+		withdrawcheckwin.add(amounttf);
+		withdrawcheckwin.add(savebutton);
 		
-		checkbalanceaccountaccnonamenaddress.add(checkbalanceaccnuml);
-		checkbalanceaccountaccnonamenaddress.add(checkbalanceaccnotb);
-		checkbalanceaccountaccnonamenaddress.add(checkbalancenamel);
-		checkbalanceaccountaccnonamenaddress.add(checkbalancenametb);
-		checkbalanceaccountaccnonamenaddress.add(checkbalanceaddressl);
-		checkbalanceaccountaccnonamenaddress.add(checkbalanceaddresstb);
-		checkbalancepanel.add(new Label("Current Balance: "));
-		checkbalancepanel.add(currentbalanceinfo);
+		findaccountnumberpan.add(wdcaccnuml);
+		findaccountnumberpan.add(accountnumbertf);
+		findaccountnumberpan.add(findaccount);
+		nameandaddresspan.add(wdcnamel);
+		nameandaddresspan.add(foundnamel);
+		nameandaddresspan.add(wdcaddressl);
+		nameandaddresspan.add(foundaddressl);
+		insertdepowithpan.add(amountlabel);
+		insertdepowithpan.add(currentbalanceinfo);
+		
+
 		
 		
-		checkbalancesavebtn.addActionListener(new ActionListener(){			
+		findaccount.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent savebutton) {
-							
-			String checkbalanceaccounttext="";
-			String checkbalancenametext="";
-			String checkbalanceaddresstext="";
-			String checkbalanceamounttext="";
-			String SQLinsert="";
-							
-				checkbalanceaccounttext=checkbalanceaccnotb.getText();
-				checkbalancenametext = checkbalancenametb.getText();
-				checkbalanceaddresstext = checkbalanceaddresstb.getText();
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					Connection con = DriverManager.getConnection(
@@ -464,15 +324,54 @@ class OpenCheckBalance{
 					Statement strefvar1 = con.createStatement(); 
 					Statement strefvar2 = con.createStatement();
 					Statement strefvar3 = con.createStatement();
-					ResultSet resultsfromtablebankwithdraw = strefvar1.executeQuery("select * from bank where Accno='"+checkbalanceaccounttext+"' and Name='"+checkbalancenametext+"' and Address='"+checkbalanceaddresstext+"'" );
-					resultsfromtablebankwithdraw.next();
-					ResultSet resultsfromtablewithdraw = strefvar2.executeQuery("select sum(Amount) from withdraw where Accno='"+checkbalanceaccounttext+"'");
-					ResultSet resultsfromtabledeposit = strefvar3.executeQuery("select sum(Amount) from deposit where Accno='"+checkbalanceaccounttext+"'");
+					ResultSet resultsfromtablebank = strefvar1.executeQuery("select * from bank where Accno='"+accountnumbertf.getText()+"'" );
+					resultsfromtablebank.next();
+					foundnamel.setText(resultsfromtablebank.getString(2));
+					foundaddressl.setText(resultsfromtablebank.getString(3));
+
+				} catch (Exception gener1) {
+					System.out.println("Error ->" + gener1.toString());
+				}
+			}
+		}
+		);
+		
+		
+		savebutton.addActionListener(new ActionListener(){			
+			public void actionPerformed(ActionEvent savebutton) {
+										String SQLinsert="";
+
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection(
+							"jdbc:mysql://localhost/qabank",
+							"root", "");
+					Statement strefvar1 = con.createStatement(); 
+					Statement strefvar2 = con.createStatement();
+					Statement strefvar3 = con.createStatement();
+					Statement strefvar4 = con.createStatement();
+					ResultSet resultsfromtablebank = strefvar1.executeQuery("select * from bank where Accno='"+accountnumbertf.getText()+"'" );
+					resultsfromtablebank.next();
+					ResultSet resultsfromtablewithdraw = strefvar2.executeQuery("select sum(Amount) from withdraw where Accno='"+accountnumbertf.getText()+"'");
+					ResultSet resultsfromtabledeposit = strefvar3.executeQuery("select sum(Amount) from deposit where Accno='"+accountnumbertf.getText()+"'");
 					resultsfromtablewithdraw.next();
 					resultsfromtabledeposit.next();
 					currentbalanceinfo.setText(Float.toString(resultsfromtabledeposit.getFloat(1) - resultsfromtablewithdraw.getFloat(1)));
+					if (areyouwith){
+						if ((resultsfromtabledeposit.getFloat(1) - resultsfromtablewithdraw.getFloat(1))<=0){
+							System.out.println("you do not have enough to withdraw");
+							cont=0;
+						}
+					} else{
+						cont=1;
+					}
+					if (withdrawordep && cont==1){
+						SQLinsert ="INSERT INTO "+tablenamewithordep+" (Accno,Amount,Datetime) VALUES ('"+resultsfromtablebank.getString(1)+"',"+amounttf.getText()+",now())";
+						strefvar4.executeUpdate(SQLinsert);
+						amounttf.setText("");
+					}
 				} catch (Exception gener1) {
-					System.out.println("No Account Found, please check accno, name and address. If forgotten please contact your local branch");
+					System.out.println("Error ->" + gener1.toString());
 				}
 				
 			}
